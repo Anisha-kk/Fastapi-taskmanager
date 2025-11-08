@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Task Manager</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      max-width: 600px;
+      margin: 2rem auto;
+    }
+    input, button {
+      padding: 0.5rem;
+      margin: 0.25rem 0;
+      width: 100%;
+    }
+    .task {
+      display: flex;
+      justify-content: space-between;
+      padding: 0.5rem;
+      border-bottom: 1px solid #ddd;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Sign Up</h2>
+  <input id="signup-username" placeholder="Username">
+  <input id="signup-email" placeholder="Email">
+  <input id="signup-password" type="password" placeholder="Password">
+  <button onclick="signup()">Sign Up</button>
+
+  <h2>Login</h2>
+  <input id="login-email" placeholder="Email">
+  <input id="login-password" type="password" placeholder="Password">
+  <button onclick="login()">Login</button>
+
+  <div id="auth-section" style="display:none;">
+    <h2>Create Task</h2>
+    <input id="task-title" placeholder="Task Title">
+    <input id="task-desc" placeholder="Description">
+    <button onclick="createTask()">Add Task</button>
+
+    <h2>Your Tasks</h2>
+    <div id="tasks"></div>
+  </div>
+
+  <script>
+    let token = '';
+
+    async function signup() {
+      const res = await fetch("http://127.0.0.1:8000/auth/signup", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({
+          username: document.getElementById("signup-username").value,
+          email: document.getElementById("signup-email").value,
+          password: document.getElementById("signup-password").value
+        })
+      });
+      alert(res.ok ? "Signup successful!" : "Signup failed");
+    }
+
+    async function login() {
+      const res = await fetch("http://127.0.0.1:8000/auth/login", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({
+          email: document.getElementById("login-email").value,
+          password: document.getElementById("login-password").value
+        })
+      });
+      const data = await res.json();
+      if (res.ok) {
+        localStorage.setItem("token", data.access_token);
+        document.getElementById("auth-section").style.display = "block";
+        getTasks();
+      } else {
+        alert(data.detail || "Login failed");
+      }
+    }
+
+    async function createTask() {
+      const res = await fetch("http://127.0.0.1:8000/tasks/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${localStorage.getItem("token")}`
+        },
+        body: JSON.stringify({
+          title: document.getElementById("task-title").value,
+          description: document.getElementById("task-desc").value
+        })
+      });
+      if (res.ok) getTasks();
+    }
+
+  async function getTasks() {
+    const res = await fetch("http://127.0.0.1:8000/tasks/", {
+      method: "GET",
+      headers: { "Authorization": `Bearer ${localStorage.getItem("token")}` }
+    });
+    const data = await res.json();
+
+    const container = document.getElementById("tasks");
+    container.innerHTML = "";
+
+    data.forEach(t => {
+      const div = document.createElement("div");
+      div.className = "task";
+
+      // Use data-id instead of inline onclick
+      div.innerHTML = `
+        <span><b>${t.title}</b> - ${t.description}</span>
+        <button class="update-btn" data-id="${t.id}">✏️</button>
+        <button class="delete-btn" data-id="${t.id}">🗑️</button>
+      `;
+
+      // Attach click event
+      div.querySelector(".update-btn").addEventListener("click", () => showUpdateForm(t));
+      div.querySelector(".delete-btn").addEventListener("click", () => deleteTask(t.id));
+      
+
+      container.appendChild(div);
+    });
+  }
+
+async function deleteTask(id) {
+  await fetch(`http://127.0.0.1:8000/tasks/${id}`, {
+    method: "DELETE",
+    headers: { "Authorization": `Bearer ${localStorage.getItem("token")}` }
+  });
+  // Refresh the task list
+  getTasks();
+}
+
+async function showUpdateForm(task) {
+  const container = document.getElementById("tasks");
+  const formDiv = document.createElement("div");
+  formDiv.className = "update-form";
+  
+  formDiv.innerHTML = `
+    <input type="text" class="update-title" value="${task.title}" placeholder="New title">
+    <input type="text" class="update-desc" value="${task.description}" placeholder="New description">
+    <select class="update-status">
+      <option value="pending" ${task.status === "pending" ? "selected" : ""}>Pending</option>
+      <option value="in_progress" ${task.status === "in_progress" ? "selected" : ""}>In Progress</option>
+      <option value="completed" ${task.status === "completed" ? "selected" : ""}>Completed</option>
+      <option value="archived" ${task.status === "archived" ? "selected" : ""}>Archived</option>
+    </select>
+    <select class="update-priority">
+      <option value="low" ${task.status === "low" ? "selected" : ""}>Low</option>
+      <option value="medium" ${task.status === "medium" ? "selected" : ""}>Medium</option>
+      <option value="high" ${task.status === "high" ? "selected" : ""}>High</option>
+      <option value="urgent" ${task.status === "urgent" ? "selected" : ""}>Urgent</option>
+    </select>
+    <input type="date" class="update-due" value="${task.due_date ? task.due_date.split('T')[0] : ''}">
+    <button class="save-update">Save</button>
+    <button class="cancel-update">Cancel</button>
+  `;
+
+  container.prepend(formDiv);
+
+  formDiv.querySelector(".save-update").addEventListener("click", async () => {
+    const newTitle = formDiv.querySelector(".update-title").value;
+    const newDesc = formDiv.querySelector(".update-desc").value;
+    const newStatus = formDiv.querySelector(".update-status").value;
+    const newPriority = formDiv.querySelector(".update-priority").value;
+    const newDueDate = formDiv.querySelector(".update-due").value;
+    const dueDateTime = newDueDate ? newDueDate + "T00:00:00" : null;
+    await updateTask(task.id, newTitle, newDesc, newStatus, newPriority, dueDateTime);
+    formDiv.remove();
+  });
+
+  // Cancel
+  formDiv.querySelector(".cancel-update").addEventListener("click", () => {
+    formDiv.remove();
+  });
+}
+
+async function updateTask(id, title, description, status, priority, due_date) {
+  const res = await fetch(`http://127.0.0.1:8000/tasks/${id}`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": `Bearer ${localStorage.getItem("token")}`
+    },
+    body: JSON.stringify({ title, description, status, priority, due_date })
+  });
+
+  if (res.ok) {
+    getTasks();
+  } else {
+    const error = await res.json();
+    alert("Update failed: " + JSON.stringify(error));
+  }
+}
+
+
+  </script>
+</body>
+</html>
