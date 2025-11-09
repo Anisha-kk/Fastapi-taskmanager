@@ -13,40 +13,40 @@ Testing: pytest + FastAPI TestClient
 
 ## Project structure
 
-fastapi-taskmanager/
-│
-├── app/
-│   ├── main.py
-│   ├── __init__.py
-│   ├── core/
-│   │   └── security.py
-│   ├── models/
-│   │   ├── user.py
-│   │   └── task.py
-│   ├── schemas/
-│   │   ├── user.py
-│   │   └── task.py
-│   ├── routers/
-│   │   ├── auth.py
-│   │   └── tasks.py
-│   ├── db/
-│   │   ├── base.py
-│   │   └── session.py
-│   └── tests/
-|       ├── test_root.py 
-│       ├── test_auth.py
-│       └── test_tasks.py
-│
-|── logger/
-│   ├── __init__.py
-|   ├── logger.conf
-|   ├── logger.py
-|
-├── frontend/
-│   ├── index.html
-├── requirements.txt
-├── venv
-└── README.md
+fastapi-taskmanager/<br>
+│<br>
+├── app/<br>
+│   ├── main.py<br>
+│   ├── __init__.py<br>
+│   ├── core/<br>
+│   │   └── security.py<br>
+│   ├── models/<br>
+│   │   ├── user.py<br>
+│   │   └── task.py<br>
+│   ├── schemas/<br>
+│   │   ├── user.py<br>
+│   │   └── task.py<br>
+│   ├── routers/<br>
+│   │   ├── auth.py<br>
+│   │   └── tasks.py<br>
+│   ├── db/<br>
+│   │   ├── base.py<br>
+│   │   └── session.py<br>
+│   └── tests/<br>
+|       ├── test_root.py <br>
+│       ├── test_auth.py<br>
+│       └── test_tasks.py<br>
+│<br>
+|── logger/<br>
+│   ├── __init__.py<br>
+|   ├── logger.conf<br>
+|   ├── logger.py>br>
+|<br>
+├── frontend/<br>
+│   ├── index.html<br>
+├── requirements.txt<br>
+├── venv<br>
+└── README.md<br>
 
 ## Tables Overview
 Table	Description
