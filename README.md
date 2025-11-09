@@ -50,7 +50,7 @@ fastapi-taskmanager/<br>
 
 ## Tables Overview
 | Table |	Description |
----------------------
+|-------|---------------|
 | users |	Stores user info and roles for authentication |
 | tasks |	Stores task info linked to users |
 
