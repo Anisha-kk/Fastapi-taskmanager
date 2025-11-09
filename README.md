@@ -78,9 +78,10 @@ fastapi-taskmanager/<br>
 
 ## Result
 When run in local: 
-    Html frontend shown in 127.0.0.0:8000
-    Swagger docs in 127.0.0.0:8000/docs
-Following are the screenshots of the result
+    Html frontend shown in 127.0.0.0:8000<br>
+    Swagger docs in 127.0.0.0:8000/docs<br>
+    
+Following are some of the screenshots of the result<br>
 ![Result in FastAPI](https://github.com/Anisha-kk/Fastapi-taskmanager/blob/main/Screenshot%20(4944).png)
 ![Frontend1](https://github.com/Anisha-kk/Fastapi-taskmanager/blob/main/Screenshot%20(4938).png)
 ![Frontend2t](https://github.com/Anisha-kk/Fastapi-taskmanager/blob/main/Screenshot%20(4941).png)
