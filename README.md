@@ -84,7 +84,6 @@ Following are the screenshots of the result
 ![Result in FastAPI](https://github.com/Anisha-kk/Fastapi-taskmanager/blob/main/Screenshot%20(4944).png)
 ![Frontend1](https://github.com/Anisha-kk/Fastapi-taskmanager/blob/main/Screenshot%20(4938).png)
 ![Frontend2t](https://github.com/Anisha-kk/Fastapi-taskmanager/blob/main/Screenshot%20(4941).png)
-![Frontend3](https://github.com/Anisha-kk/Fastapi-taskmanager/blob/main/Screenshot%20(4942).png)
-![Frontend4](https://github.com/Anisha-kk/Fastapi-taskmanager/blob/main/Screenshot%20(4943).png)
+![Frontend3](https://github.com/Anisha-kk/Fastapi-taskmanager/blob/main/Screenshot%20(4943).png)
 
 
