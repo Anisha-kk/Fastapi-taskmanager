@@ -18,9 +18,6 @@ class Task(Base):
     status = Column(SQLEnum(StatusEnum), default=StatusEnum.pending, nullable=False)
     priority = Column(SQLEnum(PriorityEnum), default=PriorityEnum.medium, nullable=False)
     due_date = Column(DateTime, nullable=True)
-
-    completed = Column(Boolean, default=False)  # optional; can be removed if replaced by `status`
-    
     created_at = Column(DateTime, default=datetime.now, nullable=False)
     updated_at = Column(DateTime, default=datetime.now, onupdate=datetime.now, nullable=True)
 

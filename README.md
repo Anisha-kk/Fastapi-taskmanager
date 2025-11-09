@@ -1,7 +1,7 @@
 # Overview
 
 The Task Manager REST API is a backend service built with FastAPI that allows users to register, log in, and manage their personal tasks.
-It demonstrates authentication, CRUD operations, database design, containerization, testing, and CI/CD integration, making it ideal for backend or Python developer portfolios.
+
 
 ## Tech Stack
 
@@ -42,26 +42,11 @@ fastapi-taskmanager/
 |   ├── logger.conf
 |   ├── logger.py
 |
-── logs/
-│   ├── access.log
-|   ├── db.log
-|   ├── error.log
-|   ├── info.log
-|   ├── server.log                                                                                 
-|
 ├── frontend/
 │   ├── index.html
 ├── requirements.txt
 ├── venv
 └── README.md
-python -m venv venv - to create venv
-venv\Scripts\activate in cmd
-Test code execution: python -m pytest
-
-
-Refer my previous files in github
-
-pip install -r requirements.txt
 
 ## Tables Overview
 Table	Description
@@ -69,25 +54,26 @@ users	Stores user info and roles for authentication
 tasks	Stores task info linked to users
 
 ### Users Table
-Column	Type	Constraints
-id	SERIAL / Integer	Primary Key
-username	VARCHAR	Unique, Not Null
-email	VARCHAR	Unique, Not Null
-hashed_password	VARCHAR	Not Null
-role	VARCHAR	Default 'user', can be 'admin'
-created_at	TIMESTAMP	Default CURRENT_TIMESTAMP
+Column	        Type	    Constraints
+username        VARCHAR	    Primary key
+email	        VARCHAR	    Unique, Not Null
+hashed_password	VARCHAR	    Not Null
+is_active       Boolean
 
 ### Tasks Table
-Column	Type	Constraints
-id	SERIAL / Integer	Primary Key
-title	VARCHAR	Not Null
-description	TEXT	Optional
-completed	BOOLEAN	Default False
-owner_id	Integer	Foreign Key → users.id
+Column	    Type	    Constraints
+id	        Integer	    Primary Key
+title	    VARCHAR	    Not Null
+description	VARCHAR	    Optional
+status	    TEXT        Values: pending (default)/in_progress/completed/archieved
+priority	TEXT        Values: low/medium(default)/high/urgent
+due_date    TIMESTAMP
 created_at	TIMESTAMP	Default CURRENT_TIMESTAMP
-updated_at	TIMESTAMP	Updated automatically
+updated_at	TIMESTAMP	Default CURRENT_TIMESTAMP
+ownername   VARCHAR     Foreign key from user table
 
 
-
-Html frontend shown in 127.0.0.0:8000
-Swagger docs in 127.0.0.0:8000/docs
+### Result
+When run in local: 
+    Html frontend shown in 127.0.0.0:8000
+    Swagger docs in 127.0.0.0:8000/docs
