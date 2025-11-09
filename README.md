@@ -56,7 +56,7 @@ fastapi-taskmanager/<br>
 
 ### Users Table
 | Column	|      Type |	   Constraints |
---------------------------------------------
+|-----------|-----------|-------------------|
 | username    |    VARCHAR	 |   Primary key |
 | email	      |  VARCHAR	 |   Unique, Not Null |
 | hashed_password	 | VARCHAR |	    Not Null |
@@ -64,7 +64,7 @@ fastapi-taskmanager/<br>
 
 ### Tasks Table
 |Column	 |   Type	|    Constraints |
---------------------------------------
+|--------|----------|----------------|
 | id	  |  Integer	|    Primary Key |
 | title	  |  VARCHAR	|    Not Null |
 | description |	VARCHAR |	 Optional |
