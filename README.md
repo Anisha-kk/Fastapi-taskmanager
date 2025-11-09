@@ -49,28 +49,31 @@ fastapi-taskmanager/<br>
 └── README.md<br>
 
 ## Tables Overview
-Table	Description
-users	Stores user info and roles for authentication
-tasks	Stores task info linked to users
+| Table |	Description |
+---------------------
+| users |	Stores user info and roles for authentication |
+| tasks |	Stores task info linked to users |
 
 ### Users Table
-Column	        Type	    Constraints
-username        VARCHAR	    Primary key
-email	        VARCHAR	    Unique, Not Null
-hashed_password	VARCHAR	    Not Null
-is_active       Boolean
+| Column	|      Type |	   Constraints |
+--------------------------------------------
+| username    |    VARCHAR	 |   Primary key |
+| email	      |  VARCHAR	 |   Unique, Not Null |
+| hashed_password	 | VARCHAR |	    Not Null |
+| is_active   |    Boolean
 
 ### Tasks Table
-Column	    Type	    Constraints
-id	        Integer	    Primary Key
-title	    VARCHAR	    Not Null
-description	VARCHAR	    Optional
-status	    TEXT        Values: pending (default)/in_progress/completed/archieved
-priority	TEXT        Values: low/medium(default)/high/urgent
-due_date    TIMESTAMP
-created_at	TIMESTAMP	Default CURRENT_TIMESTAMP
-updated_at	TIMESTAMP	Default CURRENT_TIMESTAMP
-ownername   VARCHAR     Foreign key from user table
+|Column	 |   Type	|    Constraints |
+--------------------------------------
+| id	  |  Integer	|    Primary Key |
+| title	  |  VARCHAR	|    Not Null |
+| description |	VARCHAR |	 Optional |
+| status	 |   TEXT   |     Values: pending (default)/in_progress/completed/archieved |
+| priority	 | TEXT     |   Values: low/medium(default)/high/urgent |
+| due_date   | TIMESTAMP | |
+| created_at |	TIMESTAMP |	Default CURRENT_TIMESTAMP |
+| updated_at |	TIMESTAMP |	Default CURRENT_TIMESTAMP |
+| ownername  | VARCHAR    | Foreign key from user table |
 
 
 ### Result
