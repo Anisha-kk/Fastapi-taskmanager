@@ -5,11 +5,11 @@ The Task Manager REST API is a backend service built with FastAPI that allows us
 
 ## Tech Stack
 
-Language: Python 3.11
-Framework: FastAPI
-Database: PostgreSQL (via SQLAlchemy ORM)
-Auth: JWT (using python-jose)
-Testing: pytest + FastAPI TestClient
+Language: Python 3.11<br>
+Framework: FastAPI<br>
+Database: PostgreSQL (via SQLAlchemy ORM)<br>
+Auth: JWT (using python-jose)<br>
+Testing: pytest + FastAPI TestClient<br>
 
 ## Project structure
 
